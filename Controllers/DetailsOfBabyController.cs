@@ -16,9 +16,9 @@ public class DetailsOfBabyController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<DetailsOfBaby> GetAll()
+    public IEnumerable<DetailsOfBaby> Get()
     {
-        return detailsOfBabyService.GetAll();
+        return detailsOfBabyService.Get();
     }
     [HttpGet("{id}")]
     public ActionResult<DetailsOfBaby> Get(int id)
@@ -28,11 +28,11 @@ public class DetailsOfBabyController : ControllerBase
             return NotFound();
         return res;
     }
-    [HttpPost("{id}")]
+    [HttpPost]
     public IActionResult Create(DetailsOfBaby baby)
     {
-        detailsOfBabyService.add(pizza);
-        return CreatedAtAction(nameof(Create), new { id = baby.Id }, baby);
+        detailsOfBabyService.Add(baby);
+        return CreatedAtAction(nameof(Get), new { id = baby.babyId}, baby);
     }
     [HttpPut("{id}")]
     public IActionResult Update(int id, DetailsOfBaby baby)

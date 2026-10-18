@@ -3,11 +3,11 @@ using interfaces;
 
 namespace Server;
 
-public class DetailsOfBabyServices : IdetailsOfBabyServer
+public class DetailsOfBabyServices : IdetailsOfBabyService
 {
-     List<DetailsOfBaby>? arrayOfBabies {get;}
+    List<DetailsOfBaby> arrayOfBabies {get;}
 
-    public DetailsOfBabyServer() => arrayOfBabies = Enumerable.Range(1, 5).Select(index => new DetailsOfBaby
+    public DetailsOfBabyServices() => arrayOfBabies = Enumerable.Range(1, 5).Select(index => new DetailsOfBaby
     {
         babyId = Random.Shared.Next(111111111, 999999999),
         babiesWeight = 2.5 + Random.Shared.NextDouble() * 3,
@@ -15,14 +15,8 @@ public class DetailsOfBabyServices : IdetailsOfBabyServer
         cribNumber = Random.Shared.Next(10, 20),
     }).ToList();
 
-    public List<DetailsOfBaby> GetAll() => arrayOfBabies;
-    public DetailsOfBaby Get(int id)
-    {
-        var res = arrayOfBabies?.FirstOrDefault(b => b.babyId == id);
-        if (res == null)
-            throw new Exception("Not Found");
-        return res;
-    }
+    public List<DetailsOfBaby> Get() => arrayOfBabies;
+    public DetailsOfBaby? Get(int id)=> arrayOfBabies.FirstOrDefault(b => b.babyId == id);
 
     public void Add(DetailsOfBaby baby)
     {
@@ -44,7 +38,7 @@ public class DetailsOfBabyServices : IdetailsOfBabyServer
     {
         var res = arrayOfBabies?.FirstOrDefault(b => b.babyId == id);
         if (res == null)
-            throw new Exception("Not Found");
+            return;
         arrayOfBabies?.Remove(res);
     }
 }
