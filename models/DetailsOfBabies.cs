@@ -1,6 +1,6 @@
 namespace core.models;
 //מחלקה המיצגת פרטי תינוק בתינוקיה
-public class DetailsOfBabies
+public class DetailsOfBaby
 {
     //פרטי תינוק
     //תעודת זהות
@@ -10,7 +10,7 @@ public class DetailsOfBabies
     //מספר העריסה בה הוא שוכב
     public int cribNumber { get; set; }
     //תעריך לידה
-    public Date timeOfBirth { get; set; }
+    public DateTime timeOfBirth { get; set; }
     //משקל
     public double babiesWeight { get; set; }
     // //פרטי האם
