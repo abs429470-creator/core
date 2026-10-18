@@ -1,4 +1,4 @@
-namespace core.models;
+namespace core.Models;
 //מחלקה המיצגת פרטי תינוק בתינוקיה
 public class DetailsOfBaby
 {

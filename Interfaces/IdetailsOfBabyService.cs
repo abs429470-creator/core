@@ -1,7 +1,7 @@
-using core.models;
+using core.Models;
 namespace interfaces ;
 
-public interface IdetailsOfBabyServer
+public interface IdetailsOfBabyService
 {
     List<DetailsOfBaby> GetAll();
     DetailsOfBaby Get(int id);

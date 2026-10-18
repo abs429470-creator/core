@@ -1,9 +1,9 @@
-using core.models;
+using core.Models;
 using interfaces;
 
 namespace Server;
 
-public class DetailsOfBabyServer : IdetailsOfBabyServer
+public class DetailsOfBabyServices : IdetailsOfBabyServer
 {
      List<DetailsOfBaby>? arrayOfBabies {get;}
 

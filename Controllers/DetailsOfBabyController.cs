@@ -1,41 +1,59 @@
-using core.models;
+using core.Models;
+using interfaces;
+using Server;
 using Microsoft.AspNetCore.Mvc;
 
 namespace core.Controllers;
+
 [ApiController]
 [Route("[controller]")]
 public class DetailsOfBabyController : ControllerBase
 {
-    private static List<DetailsOfBaby>? arrayOfBabies;
-
-    public DetailsOfBabyController() => arrayOfBabies = Enumerable.Range(1, 5).Select(index => new DetailsOfBaby
+    private IdetailsOfBabyService detailsOfBabyService;
+    public DetailsOfBabyController(IdetailsOfBabyService detailsOfBabyService)
     {
-        babyId=Random.Shared.Next(111111111,999999999),
-        babiesWeight=2.5+Random.Shared.NextDouble()*3,
-        timeOfBirth=DateTime.Now,
-        cribNumber=Random.Shared.Next(10,20),
-    }).ToList();
-
-    // private static readonly List<DetailsOfBaby> arrayOfBabies =
-    //     Enumerable.Range(1, 5).Select(index => new DetailsOfBaby
-    //     {
-    //         babyId = Random.Shared.Next(111111111, 999999999),
-    //         babiesWeight = 2.5 + Random.Shared.NextDouble() * 3,
-    //         timeOfBirth = DateTime.Now,
-    //         cribNumber = Random.Shared.Next(10, 20),
-    //     }).ToList();
+        this.detailsOfBabyService = detailsOfBabyService;
+    }
 
     [HttpGet]
-    public IEnumerable<DetailsOfBaby> Get()
+    public IEnumerable<DetailsOfBaby> GetAll()
     {
-        return arrayOfBabies;
+        return detailsOfBabyService.GetAll();
     }
     [HttpGet("{id}")]
-     public ActionResult<DetailsOfBaby> Get(int id)
+    public ActionResult<DetailsOfBaby> Get(int id)
     {
-        var res=arrayOfBabies?.FirstOrDefault(b=>b.babyId==id);
-       if (res == null)
+        var res = detailsOfBabyService.Get(id);
+        if (res == null)
             return NotFound();
         return res;
     }
+    [HttpPost("{id}")]
+    public IActionResult Create(DetailsOfBaby baby)
+    {
+        detailsOfBabyService.add(pizza);
+        return CreatedAtAction(nameof(Create), new { id = baby.Id }, baby);
+    }
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, DetailsOfBaby baby)
+    {
+        if (id != baby.babyId)
+            return BadRequest();
+        var existingBaby = detailsOfBabyService.Get(id);
+        if (existingBaby == null)
+            return NotFound();
+        detailsOfBabyService.Update(id, baby);
+        return NoContent();
+    }
+      [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var baby = detailsOfBabyService.Get(id);
+            if (baby is null)
+                return  NotFound();
+
+            detailsOfBabyService.Delete(id);
+
+            return Content($"Baby with id {id} deleted successfully");
+        }
 }
